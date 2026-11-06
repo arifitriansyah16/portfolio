@@ -9,9 +9,9 @@
 <meta property="og:site_name" content="Ari Fitriansyah">
 <meta property="og:title" content="Ari Fitriansyah — Graphic Designer Portfolio">
 <meta property="og:description" content="Branding, packaging, marketing and digital design. Design is not art. Design is solving problem.">
-<meta property="og:url" content="https://arifitriansyah.site/portfolio/">
-<link rel="canonical" href="https://arifitriansyah.site/portfolio/">
-<meta property="og:image" content="https://arifitriansyah.site/portfolio/og-image.jpg">
+<meta property="og:url" content="https://arifitriansyah.site/">
+<link rel="canonical" href="https://arifitriansyah.site/">
+<meta property="og:image" content="https://arifitriansyah.site/og-image.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -228,7 +228,7 @@ function shrink(f){return new Promise(r=>{const fr=new FileReader();fr.onload=()
 function probe(u){return new Promise(r=>{const m=new Image();m.onload=()=>r(1);m.onerror=()=>r(0);m.src=u})}
 let GHR='',GHD=null;
 async function ghGet(p){const r=await fetch('https://api.github.com/repos/'+GHR+'/contents/'+p);return r.ok?r.json():null}
-async function listGH(s){const h=location.hostname,gi=/\.github\.io$/.test(h);if(!gi&&h!=='arifitriansyah.site'&&h!=='www.arifitriansyah.site')return null;const sg0=location.pathname.split('/')[1]||'',sg=/\./.test(sg0)?'':sg0;if(gi){const u=h.split('.')[0];GHR=u+'/'+(sg||(u+'.github.io'))}else GHR='arifitriansyah16/'+(sg||'arifitriansyah16.github.io');
+async function listGH(s){const h=location.hostname,gi=/\.github\.io$/.test(h);if(!gi&&h!=='arifitriansyah.site'&&h!=='www.arifitriansyah.site')return null;const sg0=location.pathname.split('/')[1]||'',sg=/\./.test(sg0)?'':sg0;if(gi){const u=h.split('.')[0];GHR=u+'/'+(sg||(u+'.github.io'))}else GHR='arifitriansyah16/'+(sg||'portfolio');
 if(!GHD){GHD={};for(const d of['image','images']){try{const j=await ghGet(d);if(Array.isArray(j))GHD[d]=j.filter(x=>x.type==='dir').map(x=>x.name)}catch(e){}}}
 const want=[s,...(s==='dap'?['dept-store']:[])];
 for(const d in GHD){const m=GHD[d].find(n=>want.includes(n.toLowerCase()));if(!m)continue;try{const j=await ghGet(d+'/'+m);if(!Array.isArray(j))continue;const f=j.filter(x=>x.type==='file'&&/\.(jpe?g|png|webp|gif|avif)$/i.test(x.name)).map(x=>x.name);f.sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));if(f.length)return f.map(n=>d+'/'+encodeURIComponent(m)+'/'+encodeURIComponent(n))}catch(e){}}return null}
