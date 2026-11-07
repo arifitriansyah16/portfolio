@@ -6,6 +6,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#9a6b3c">
+<meta name="robots" content="index, follow, noimageindex">
 <link rel="preload" as="image" href="assets/s1.webp" fetchpriority="high">
 <link rel="preload" as="font" type="font/otf" href="assets/dune-rise.otf" crossorigin>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -183,6 +184,9 @@ footer a:hover{transform:scale(1.06)}
 .b1{background:radial-gradient(circle,#ffd98a 0,rgba(255,217,138,0) 68%)}
 .b2{background:radial-gradient(circle,#c4622d 0,rgba(196,98,45,0) 68%)}
 .b3{background:radial-gradient(circle,#5a3a22 0,rgba(90,58,34,0) 68%)}
+.mi,#lb{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+.mi img,#lb img{pointer-events:none;-webkit-user-drag:none;user-drag:none}
+.copy{margin:22px 0 4px;text-align:center;font-size:12px;color:var(--mu);letter-spacing:.04em}
 </style>
 </head>
 <body>
@@ -218,6 +222,7 @@ footer a:hover{transform:scale(1.06)}
 </div>
 
 <footer id="contact"><div style="max-width:640px;line-height:1.55">Have a project in mind or looking to collaborate? Let’s create something meaningful together.</div><a href="https://wa.me/6289504935881" target="_blank" rel="noopener">Contact Me</a></footer></div><div id="detail" hidden></div>
+<div class="copy">© 2026 Ari Fitriansyah. All rights reserved</div>
 </main>
 <audio id="bgm" loop preload="none"></audio>
 <button id="snd" aria-label="Toggle music" title="Music"><i></i><i></i><i></i><i></i></button>
@@ -246,7 +251,7 @@ if(!GHD){GHD={};for(const d of['image','images']){try{const j=await ghGet(d);if(
 const want=[s,...(s==='dap'?['dept-store']:[])];
 for(const d in GHD){const m=GHD[d].find(n=>want.includes(n.toLowerCase()));if(!m)continue;try{const j=await ghGet(d+'/'+m);if(!Array.isArray(j))continue;const f=j.filter(x=>x.type==='file'&&/\.(jpe?g|png|webp|gif|avif)$/i.test(x.name)).map(x=>x.name);f.sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));if(f.length)return f.map(n=>d+'/'+encodeURIComponent(m)+'/'+encodeURIComponent(n))}catch(e){}}return null}
 async function findImgs(s){const g=await listGH(s);if(g)return g;const names=[s,...(s==='dap'?['dept-store']:[])],ex=['jpg','jpeg','png','webp','JPG','JPEG','PNG'],dirs=['image','images'];for(const nm of names){const o=[];let d=null;for(let n=1;n<=80;n++){let f=0;for(const dd of(d?[d]:dirs)){for(const e of ex){const u=dd+'/'+nm+'/'+n+'.'+e;if(await probe(u)){f=u;d=dd;break}}if(f)break}if(!f)break;o.push(f)}if(o.length)return o}return[]}
-function addImg(mas,u,alt,i){const d=document.createElement('div');d.className='mi rv';d.style.setProperty('--i',i);d.innerHTML='<img loading="lazy" src="'+u+'" alt="'+alt+'">';d.onclick=()=>{lb.querySelector('img').src=u;lb.classList.add('on')};mas.appendChild(d)}
+function addImg(mas,u,alt,i){const d=document.createElement('div');d.className='mi rv';d.style.setProperty('--i',i);d.innerHTML='<img loading="lazy" draggable="false" src="'+u+'" alt="'+alt+'">';d.onclick=()=>{lb.querySelector('img').src=u;lb.classList.add('on')};mas.appendChild(d)}
 function render(p){const mas=document.getElementById('mas'),mine=load(p[1]);mas.innerHTML='';let i=0;
 mine.forEach(u=>addImg(mas,u,p[0],i++));
 findImgs(p[1]).then(rem=>{if(location.hash.slice(1)!=p[1])return;
@@ -275,6 +280,7 @@ addEventListener('load',()=>{setTimeout(()=>{document.querySelectorAll('.s2,.s3,
 sb.onclick=ev=>{ev.stopPropagation();if(au.paused){want=true;plyr().then(ui).catch(()=>{})}else{want=false;au.pause();ui()}};
 au.addEventListener('play',ui);au.addEventListener('pause',ui);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)au.pause();else if(want)plyr().catch(()=>{})});
+document.addEventListener('contextmenu',e=>{if(e.target.closest&&e.target.closest('.mi,#lb'))e.preventDefault()});document.addEventListener('dragstart',e=>{if(e.target.closest&&e.target.closest('.mi,#lb'))e.preventDefault()});
 </script>
 </body>
 </html>
